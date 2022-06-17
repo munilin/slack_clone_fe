@@ -8,6 +8,7 @@ const Chat = (props) => {
     <React.Fragment>
       <TopBar>
       <p>검색창</p>
+      테스트
       </TopBar>
     </React.Fragment>
   );
