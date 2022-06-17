@@ -1,7 +1,7 @@
-import Home from "./Home"
-import Chat from "./Chat";
-import Login from "./Login";
-import Signup from "./Signup"
+import Home from './Home';
+import Chat from './Chat';
+import Login from './Login';
+import Signup from './Signup';
+import NotFound from './NotFound';
 
-
-export { Chat, Login, Home, Signup };
+export { Chat, Login, Home, Signup, NotFound };
