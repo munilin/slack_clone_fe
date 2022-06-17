@@ -3,7 +3,7 @@ import React from 'react';
 const NotFound = props => {
   return (
     <React.Fragment>
-      <p>Not fount</p>
+      <p>Not found</p>
     </React.Fragment>
   );
 };
