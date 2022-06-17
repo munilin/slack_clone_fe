@@ -1,6 +1,6 @@
 const color = {
   blue: '#4286C5',
-  black: '#444444',
+  black: '#000',
   heavyGrey: '#777777',
   grey: '#AAAAAA',
   lightGrey: '#DDDDDD',
@@ -16,7 +16,7 @@ const hoverColor = {
 };
 
 const fontFamily = {
-  default: 'NEXON Lv1 Gothic OTF',
+  default: 'Pretendard-Regular',
 };
 
 export const defaultTheme = {
