@@ -1,4 +1,4 @@
-### Slack Clone FE
+### 🔷 Slack Clone FE 🔷
 슬랙의 틀을 클론하며 최소 기능과 실시간 채팅(Web Soket)을 구현합니다.
 
 ### ✔ 팀원
@@ -7,6 +7,9 @@ Front : 이동복, 문희린
 
 ### ✔ 개발기간
 2022.06.17 ~ 2022.06.23
+
+### ✔ 역할 분담
+![image](https://user-images.githubusercontent.com/103887348/174427710-f020bf92-3ecb-4964-abe5-d23f4abd9900.png)
 
 ### ✔ 기존 Slack 사이트와 다른점
 
@@ -27,5 +30,4 @@ Front : 이동복, 문희린
 ![image](https://user-images.githubusercontent.com/103887348/174427639-2164f6eb-4570-40c6-9ce0-a12acdd95e7e.png)
 
 ### ✔ 패키지 설치
-![image](https://user-images.githubusercontent.com/103887348/174427651-a734937c-316d-4daf-85b5-6eb3850308a3.png)
-
+![image](https://user-images.githubusercontent.com/103887348/174427688-58748daf-37fd-424a-b4df-72c02adf4994.png)
