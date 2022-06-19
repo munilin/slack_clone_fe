@@ -149,7 +149,7 @@ const Signup = props => {
           <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
         </div>
         <Guide>먼저 이메일부터 입력해 보세요</Guide>
-        <Reco>직장에서 사용하는 이메일 주소로 로그인하는걸 추천드려요.</Reco>
+        <Reco>직장에서 사용하는 이메일 주소로 회원가입하는걸 추천드려요.</Reco>
         <InputBox>
           <Input email={validation.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력해주세요' />
           <Validation email={validation.email}>이메일 형식을 입력해주세요</Validation>
