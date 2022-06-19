@@ -6,7 +6,7 @@ const Chat = (props) => {
     <React.Fragment>
       <Container>
         <TopBar>
-          <p>✖</p> <x>💬</x>
+          <p>✖</p> <ul>💬</ul>
           <div className="search">
             <input type="text" placeholder="검색어 입력" />
             <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" />
@@ -42,7 +42,6 @@ const Chat = (props) => {
               <p>👁️ 이범규(항해하라)</p>
               <p>➕ 팀원추가</p>
 
-                
               </ChannelList2>
             </ChannelBox>
           </div>
@@ -86,7 +85,10 @@ const Chat = (props) => {
     </React.Fragment>
   );
 };
-const Container = styled.div``;
+const Container = styled.div`
+// width: 100%;
+// height: 100%;
+`;
 
 const TopBar = styled.div`
   width: 1535px;
@@ -121,7 +123,7 @@ const TopBar = styled.div`
     margin: 11px;
     cursor: pointer;
   }
-  x {
+  ul {
     float: left;
     color: white;
     margin: 11px;
@@ -206,7 +208,7 @@ const ChatBox = styled.div`
   width: 1165px;
   height: 600px;
   border: 1px white solid;
-  background-color: #white;
+  background-color: gray;
   & p {
     color: white;
     padding: 15px;
@@ -214,7 +216,7 @@ const ChatBox = styled.div`
 `;
 
 const ChatList = styled.div`
-  width: 1165px;
+  width: 1164px;
   height: 480px;
   border: 1px white solid;
   background-color: gray;
