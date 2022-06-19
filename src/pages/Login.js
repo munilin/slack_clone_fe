@@ -1,7 +1,19 @@
+// react
 import React, { useState } from 'react';
+
+// router
+import { Link } from 'react-router-dom';
+
+// style
 import styled from 'styled-components';
 
+// redux
+import { useDispatch } from 'react-redux';
+import { loginDB } from '../redux/module/userSlice';
+
 const Login = props => {
+  const dispatch = useDispatch();
+
   const [inputValue, setInputValue] = useState({
     email: '',
     pwd: '',
@@ -15,9 +27,13 @@ const Login = props => {
     event.preventDefault();
 
     if (inputValue.email.trim() === '') {
+      return false;
     }
     if (inputValue.pwd.trim() === '') {
+      return false;
     }
+
+    dispatch(loginDB(inputValue.email, inputValue.pwd));
 
     setInputValue({
       email: '',
@@ -29,6 +45,12 @@ const Login = props => {
   return (
     <React.Fragment>
       <SignUpForm onSubmit={handleSignUp}>
+        <SignUp>
+          <span>Slack을 처음 사용하시나요?</span>
+          <Link to='/signup'>
+            <span>계정 생성</span>
+          </Link>
+        </SignUp>
         <Logo>
           <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
         </Logo>
@@ -47,6 +69,22 @@ const Login = props => {
   );
 };
 
+const SignUp = styled.div`
+  position: absolute;
+  right: 5%;
+  top: 15%;
+  font-size: 14px;
+  span {
+    font-weight: bold;
+  }
+  span:first-child {
+    display: block;
+    text-align: right;
+  }
+  span:last-child {
+    color: #1e90ff;
+  }
+`;
 const Logo = styled.div``;
 const Guide = styled.span``;
 const Reco = styled.span``;

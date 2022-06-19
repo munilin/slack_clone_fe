@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import instance from '../../shared/axios';
 
+export const loginDB = ({ useremail, password }) => {
+  return async function (navigate) {};
+};
+
 export const createUserDB = ({ useremail, password, username }) => {
   return async function (navigate) {
     alert(username);
