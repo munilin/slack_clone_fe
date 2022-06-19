@@ -1,8 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
+// page
 import { Chat, Login, Home, Signup, NotFound } from './pages/index';
-import { BrowserRouter } from 'react-router-dom';
+
+// token
+import { getToken } from './shared/token';
+
+// router
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+
+// react
+import React, { useEffect } from 'react';
 
 const Router = () => {
+  const isToken = getToken() ? true : false;
+  console.log('isToken?', isToken);
+
   return (
     <BrowserRouter>
       <Routes>
