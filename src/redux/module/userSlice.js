@@ -1,19 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-import instance from "../../shared/axios";
-import { useNavigate } from "react-router-dom";
+import { createSlice } from '@reduxjs/toolkit';
+import instance from '../../shared/axios';
 
-export const createUserDB = userData => {
-  const navigate = useNavigate();
-  return async function () {
+export const createUserDB = ({ useremail, password, username }) => {
+  return async function (navigate) {
+    alert(username);
     try {
-      const response = await instance.post('/user/signup', userData)
+      const response = await instance.post('/user/signup', (useremail, password, username));
       alert(response);
       navigate('/login');
     } catch (error) {
       alert(error);
     }
-  }
-}
+  };
+};
 
 const userSlice = createSlice({
   name: 'user',
@@ -26,13 +25,13 @@ const userSlice = createSlice({
       state.list = [...action.payload];
     },
     createUser: (state, action) => {
-      state.list.push(action.payload),
+      state.list.push(action.payload);
     },
     updateUser: (state, action) => {
       // 내용 채우기
     },
-  }
+  },
 });
 
-export const { loadUser, createUser, updateUser};
+export const { loadUser, createUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { userApi } from '../shared/api';
-import { useNavigate } from 'react-router-dom';
+import { createUserDB } from '../redux/module/userSlice';
+import { useDispatch } from 'react-redux';
 
 const Signup = props => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [validation, setValidation] = useState({
     email: false,
     pwd: false,
@@ -135,22 +135,8 @@ const Signup = props => {
     const isSubmit = Object.values(validation).indexOf(true);
 
     if (isSubmit === -1) {
-      try {
-        // 여기서 로직 타지 말고 userSlice로 이동해서 처리하고 state.user에 유저 정보가 들어가게 처리
-        const response = userApi.signup(inputValue.email, inputValue.pwd, inputValue.username);
-        console.log(response);
-        navigate('/login');
-      } catch (error) {
-        console.log(error);
-      }
-
-      // 입력 값 초기화
-      setInputValue({
-        email: '',
-        pwd: '',
-        pwdCheck: '',
-        username: '',
-      });
+      console.log(2);
+      dispatch(createUserDB({ useremail: inputValue.email, password: inputValue.pwd, username: inputValue.username }));
     } else {
       alert('회원정보를 확인해주세요.');
       return false;
