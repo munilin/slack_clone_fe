@@ -19,7 +19,7 @@ const chatSlice = createSlice({
       state.list = action.payload;
     },
     createChannelAction: (state, action) => {
-      state.list = [...action.payload, action.payload];
+      state.list.push(action.payload);
     },
     deleteChannelAction: (state, action) => {
       console.log('삭제하기');
@@ -46,8 +46,8 @@ export const createChannel = channel => {
     console.log('채널 추가하기');
     instance.post('http://localhost:5001/channel', channel).then(response => {
       console.log(response.data);
+      dispatch(createChannelAction(response.data));
     });
-    dispatch(createChannelAction());
   };
 };
 
