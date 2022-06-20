@@ -16,10 +16,10 @@ export const authApi = {
       username,
     }),
 
-  // e.g) 유저 프로필 변경
-  editUserProfile: someData =>
-    instance.put(`api/user/${userId}`, {
-      someData: someData,
-      someOtherData: someOtherData,
-    }),
+//   // e.g) 유저 프로필 변경
+//   editUserProfile: someData =>
+//     instance.put(`api/user/${userId}`, {
+//       someData: someData,
+//       someOtherData: someOtherData,
+//     }),
 };
