@@ -1,35 +1,31 @@
-import React from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../components/Header";
+import React from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import Header from '../components/Header';
 
-import {
-  loadChat,
-  postChat,
-  loadChannel,
-  createChannel,
-  deleteChannel,
-} from "../redux/modules/chatSlice";
+import { loadChat, postChat, loadChannel, createChannel, deleteChannel } from '../redux/modules/chatSlice';
 
-
-const Chat = (props) => {
+const Chat = props => {
   const dispatch = useDispatch();
 
   const message_ref = React.useRef(null);
 
   const channel_ref = React.useRef(null);
-  const chat_data = useSelector((state) => state.chat.data);
-  const channel_data = useSelector((state) => state.chat.data);
-  console.log(chat_data);
-  console.log(channel_data);
+  const chat_data = useSelector(state => state.chat.list);
+  const channel_data = useSelector(state => state.chat.list);
 
   React.useEffect(() => {
     dispatch(loadChannel());
-  }, [dispatch, deleteChannel]);
+  }, [dispatch]);
 
   // React.useEffect(() => {
   //   dispatch(loadChannel());
   // }, [dispatch]);
+
+  const addChannel = event => {
+    event.preventDefault();
+    createChannelList();
+  };
 
   const createChannelList = () => {
     dispatch(
@@ -51,9 +47,9 @@ const Chat = (props) => {
     <React.Fragment>
       <Container>
         <Header></Header>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: 'flex' }}>
           <LeftBar>
-            <div id="circle"></div>
+            <div id='circle'></div>
           </LeftBar>
           <div>
             <WorkSpace>
@@ -81,17 +77,12 @@ const Chat = (props) => {
                         >
                           ⛔
                         </div>
-
                       </ChannelListBox>
                     );
                   })}
                 ;
-                <form style={{ margin: "20px 20px" }}>
-                  <input
-                    type="text"
-                    ref={channel_ref}
-                    placeholder="채널 이름"
-                  ></input>
+                <form onSubmit={addChannel} style={{ margin: '20px 20px' }}>
+                  <input type='text' ref={channel_ref} placeholder='채널 이름'></input>
                   <button
                     onClick={() => {
                       createChannelList();
@@ -116,7 +107,9 @@ const Chat = (props) => {
                   chat_data.map((list, index) => {
                     return (
                       <ChatContent key={index}>
-                        <p>{list.message},{list.id}</p>
+                        <p>
+                          {list.message},{list.id}
+                        </p>
                       </ChatContent>
                     );
                   })}
@@ -126,19 +119,14 @@ const Chat = (props) => {
                 <ChatToolUp>
                   <p>🟠🟡🟢🟤🔵🟣</p>
                 </ChatToolUp>
-                <input
-                  ref={message_ref}
-                  className="Content"
-                  type="text"
-                  placeholder="7기 공지방에 메시지 보내기"
-                ></input>
+                <input ref={message_ref} className='Content' type='text' placeholder='7기 공지방에 메시지 보내기'></input>
 
                 <ChatToolDown>
                   <p>
                     🟣🔵🟤🟠🟡🟢
                     <img
-                      src="https://cdn-icons-png.flaticon.com/512/149/149446.png"
-                      alt="Post"
+                      src='https://cdn-icons-png.flaticon.com/512/149/149446.png'
+                      alt='Post'
                       onClick={() => {
                         postChatList();
                       }}
@@ -216,12 +204,11 @@ const ChannelListBox = styled.div`
   & p {
     color: white;
   }
-  & div{
+  & div {
     cursor: pointer;
     padding: 10px;
     cursor: pointer;
   }
-
 `;
 
 const ChannelTitle = styled.div`
