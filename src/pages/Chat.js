@@ -1,17 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "../components/Header";
+import { loadChat, postChat } from "../redux/modules/chatSlice";
 
 const Chat = (props) => {
+  const dispatch = useDispatch();
+
+  const message_ref = React.useRef(null);
+  const chat_data = useSelector((state) => state.chat.data);
+  console.log(chat_data);
+
+  React.useEffect(() => {
+    dispatch(loadChat());
+  }, [dispatch]);
+
+  const postChatList = () => {
+    dispatch(
+      postChat({
+        message: message_ref.current.value,
+      })
+    );
+  };
+
   return (
     <React.Fragment>
       <Container>
-        <TopBar>
-          <p>✖</p> <ul>💬</ul>
-          <div className="search">
-            <input type="text" placeholder="검색어 입력" />
-            <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" />
-          </div>
-        </TopBar>
+        <Header></Header>
         <div style={{ display: "flex" }}>
           <LeftBar>
             <div id="circle"></div>
@@ -29,19 +44,16 @@ const Chat = (props) => {
               </ChannelList1>
               <hr />
               <ChannelList2>
-              <p>🔽 채널</p>
-              <p>🔒 7기_D반_공지방</p>
-              <p>📃 공개_안내_공지방</p>
-              <p>🔒 7기_D반_잡담방</p>
-              <p>🔒 7기_D반_질문방</p>
-              <p>🔍 채널 탐색</p>
-              <br/>
-              <p>🔽 다이렉트 메시지</p>
-              <p>💑 김주혁(7기)</p>
-              <p>🧏 정성경(항해99 매니저)</p>
-              <p>👁️ 이범규(항해하라)</p>
-              <p>➕ 팀원추가</p>
-
+                <p>🔽 채널</p>
+                {chat_data &&
+                  chat_data.map((list, index) => {
+                    return (
+                      <ChannelListBox key={index}>
+                        <p>🔒 {list.message}</p>
+                      </ChannelListBox>
+                    );
+                  })}
+                ;
               </ChannelList2>
             </ChannelBox>
           </div>
@@ -66,6 +78,7 @@ const Chat = (props) => {
                   <p>🟠🟡🟢🟤🔵🟣</p>
                 </ChatToolUp>
                 <input
+                  ref={message_ref}
                   className="Content"
                   type="text"
                   placeholder="7기 공지방에 메시지 보내기"
@@ -74,7 +87,13 @@ const Chat = (props) => {
                 <ChatToolDown>
                   <p>
                     🟣🔵🟤🟠🟡🟢
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149446.png" />
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/149/149446.png"
+                      alt="Post"
+                      onClick={() => {
+                        postChatList();
+                      }}
+                    />
                   </p>
                 </ChatToolDown>
               </ChatPost>
@@ -86,49 +105,8 @@ const Chat = (props) => {
   );
 };
 const Container = styled.div`
-// width: 100%;
-// height: 100%;
-`;
-
-const TopBar = styled.div`
-  width: 1535px;
-  height: 40px;
-  border: 2px solid;
-  background-color: #121016;
-  border: 1px white solid;
-}
-  .search {
-    position: relative;
-    width: 400px;
-    margin: 3px auto;
-  }
-  input {
-    width: 100%;
-    height: 10px;
-    border: 1px solid #bbb;
-    padding: 14px 12px;
-    font-size: 14px;
-  }
-  img {
-    position: absolute;
-    width: 15px;
-    top: 6px;
-    right: 12px;
-    margin: 0;
-    cursor: pointer;
-  }
-  p {
-    float: right;
-    color: white;
-    margin: 11px;
-    cursor: pointer;
-  }
-  ul {
-    float: left;
-    color: white;
-    margin: 11px;
-    cursor: pointer;
-  }
+  // width: 100%;
+  // height: 100%;
 `;
 const LeftBar = styled.div`
   width: 70px;
@@ -178,6 +156,14 @@ const ChannelList2 = styled.div`
   & p {
     color: white;
     padding: 10px;
+  }
+`;
+const ChannelListBox = styled.div`
+  width: 300px;
+  height: 30px;
+  background-color: #19171d;
+  & p {
+    color: white;
   }
 `;
 
