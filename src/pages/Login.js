@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 // redux
 import { useDispatch } from 'react-redux';
-import { loginDB } from '../redux/module/userSlice';
+import { loginDB } from '../redux/modules/userSlice';
 
 const Login = props => {
   const dispatch = useDispatch();

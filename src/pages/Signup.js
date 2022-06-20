@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { createUserDB } from '../redux/module/userSlice';
+import { createUserDB } from '../redux/modules/userSlice';
 import { useDispatch } from 'react-redux';
 
 const Signup = props => {

@@ -1,8 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import instance from '../../shared/axios';
+import { setToken } from '../../shared/token';
 
 export const loginDB = ({ useremail, password }) => {
-  return async function (navigate) {};
+  return async function (navigate) {
+    try {
+      const response = await instance.post('/user/login', (useremail, password));
+      console.log(response.token);
+      setToken(response.token);
+      localStorage.setItem(response.username);
+      navigate('/');
+    } catch (error) {
+      alert(error);
+    }
+  };
 };
 
 export const createUserDB = ({ useremail, password, username }) => {
