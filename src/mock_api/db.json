@@ -1,30 +1,16 @@
 {
   "data": [
     {
-      "id": 1,
-      "username": "dabin",
-      "createdAt": "2022-06-07T00:00:00",
-      "content": "포기하지말고 항해하라"
+      "message": "7기_잡담방입니다",
+      "id": 1
     },
     {
-      "id": 2,
-      "username": "Heerin",
-      "createdAt": "2022-06-137T21:03:41",
-      "content": "저 항해 수료 후 조기 취업했어요"
+      "message": "7기 잡담방",
+      "id": 2
     },
     {
-      "id": 3,
-      "username": "dongbok",
-      "createdAt": "2022-06-167T12:23:17",
-      "content": "희린님두요? 저두여ㅎㅎ"
-    },
-    [
-      {
-        "id": 4,
-        "username": "Hi23132",
-        "createdAt": "2022-06-07T00:00:00",
-        "content": "asdasdasa"
-      }
-    ]
+      "message": "7기 잡담방",
+      "id": 3
+    }
   ]
 }
