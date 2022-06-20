@@ -1,44 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { loadChat, postChat } from "../redux/modules/chatSlice";
 
 const Chat = (props) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const message_ref = React.useRef(null);
-  const chat_data = useSelector((state) => state);
-  console.log(chat_data);
-
-  React.useEffect(() => {
-    dispatch(loadChat());
-  }, [dispatch]);
-
-  const postChatList = () => {
-    dispatch(
-      postChat({
-        // id: id.index
-        message: message_ref.current.value,
-      })
-    );
-    navigate("/");
-  };
-
   return (
     <React.Fragment>
       <Container>
         <TopBar>
-          <ul>💬</ul>
-          <p>✖</p>
+          <p>✖</p> <ul>💬</ul>
           <div className="search">
             <input type="text" placeholder="검색어 입력" />
-            <img
-              src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-              alt="Search"
-            />
+            <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" />
           </div>
         </TopBar>
         <div style={{ display: "flex" }}>
@@ -51,30 +22,26 @@ const Chat = (props) => {
             </WorkSpace>
             <ChannelBox>
               <ChannelList1>
-                    <p>📬 스레드</p>
-                    <p>📮 멘션 및 반응</p>
-                    <p>📝 Slack Connect</p>
-                    <p>⛓ 더보기</p>
-                  </ChannelList1>
-                  {/* {chat_data.map((list, index) => {
-                return (
-                  null
-                );
-              })} */}
+                <p>📬 스레드</p>
+                <p>📮 멘션 및 반응</p>
+                <p>📝 Slack Connect</p>
+                <p>⛓ 더보기</p>
+              </ChannelList1>
               <hr />
               <ChannelList2>
-                <p>🔽 채널</p>
-                <p>🔒 7기_D반_공지방</p>
-                <p>📃 공개_안내_공지방</p>
-                <p>🔒 7기_D반_잡담방</p>
-                <p>🔒 7기_D반_질문방</p>
-                <p>🔍 채널 탐색</p>
-                <br />
-                <p>🔽 다이렉트 메시지</p>
-                <p>💑 김주혁(7기)</p>
-                <p>🧏 정성경(항해99 매니저)</p>
-                <p>👁️ 이범규(항해하라)</p>
-                <p>➕ 팀원추가</p>
+              <p>🔽 채널</p>
+              <p>🔒 7기_D반_공지방</p>
+              <p>📃 공개_안내_공지방</p>
+              <p>🔒 7기_D반_잡담방</p>
+              <p>🔒 7기_D반_질문방</p>
+              <p>🔍 채널 탐색</p>
+              <br/>
+              <p>🔽 다이렉트 메시지</p>
+              <p>💑 김주혁(7기)</p>
+              <p>🧏 정성경(항해99 매니저)</p>
+              <p>👁️ 이범규(항해하라)</p>
+              <p>➕ 팀원추가</p>
+
               </ChannelList2>
             </ChannelBox>
           </div>
@@ -99,7 +66,6 @@ const Chat = (props) => {
                   <p>🟠🟡🟢🟤🔵🟣</p>
                 </ChatToolUp>
                 <input
-                  ref={message_ref}
                   className="Content"
                   type="text"
                   placeholder="7기 공지방에 메시지 보내기"
@@ -108,13 +74,7 @@ const Chat = (props) => {
                 <ChatToolDown>
                   <p>
                     🟣🔵🟤🟠🟡🟢
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/149/149446.png"
-                      alt="Post"
-                      onClick={() => {
-                        postChatList();
-                      }}
-                    />
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149446.png" />
                   </p>
                 </ChatToolDown>
               </ChatPost>
@@ -126,8 +86,8 @@ const Chat = (props) => {
   );
 };
 const Container = styled.div`
-  // width: 100%;
-  // height: 100%;
+// width: 100%;
+// height: 100%;
 `;
 
 const TopBar = styled.div`
