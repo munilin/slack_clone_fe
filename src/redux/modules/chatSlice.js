@@ -19,7 +19,7 @@ const chatSlice = createSlice({
       state.list = action.payload;
     },
     createChannelAction: (state, action) => {
-      state.list = action.payload;
+      state.list = [...action.payload, action.payload];
     },
     deleteChannelAction: (state, action) => {
       console.log('삭제하기');
@@ -29,10 +29,10 @@ const chatSlice = createSlice({
   },
 });
 
-// axios 가져오기
+// 채널 목록 불러오기
 export const loadChannel = () => {
   return function (dispatch) {
-    console.log('채널 가져오기');
+    console.log('채널 목록 불러오기');
     instance.get('http://localhost:5001/channel').then(response => {
       dispatch(loadChannelAction(response.data));
       console.log(response);
@@ -40,9 +40,10 @@ export const loadChannel = () => {
   };
 };
 
-// axios 추가하기
+// 채널 추가하기
 export const createChannel = channel => {
   return function (dispatch) {
+    console.log('채널 추가하기');
     instance.post('http://localhost:5001/channel', channel).then(response => {
       console.log(response.data);
     });
