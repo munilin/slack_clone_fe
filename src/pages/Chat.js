@@ -23,7 +23,10 @@ const Chat = props => {
   // }, [dispatch]);
 
   const addChannel = event => {
-    event.preventDefault();
+    console.log(event.type);
+    if (event.type === 'submit') {
+      event.preventDefault();
+    }
     createChannelList();
   };
 
@@ -33,6 +36,7 @@ const Chat = props => {
         channel: channel_ref.current.value,
       })
     );
+    channel_ref.current.value = '';
   };
 
   const postChatList = () => {
@@ -43,6 +47,7 @@ const Chat = props => {
     );
   };
 
+  console.log(chat_data);
   return (
     <React.Fragment>
       <Container>
@@ -83,13 +88,7 @@ const Chat = props => {
                 ;
                 <form onSubmit={addChannel} style={{ margin: '20px 20px' }}>
                   <input type='text' ref={channel_ref} placeholder='채널 이름'></input>
-                  <button
-                    onClick={() => {
-                      createChannelList();
-                    }}
-                  >
-                    채널추가
-                  </button>
+                  <button onClick={() => addChannel}>채널추가</button>
                 </form>
               </ChannelList2>
             </ChannelBox>
