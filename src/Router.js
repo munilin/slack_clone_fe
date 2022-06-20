@@ -5,10 +5,10 @@ import { Chat, Login, Home, Signup, NotFound } from './pages/index';
 import { getToken } from './shared/token';
 
 // router
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // react
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const Router = () => {
   const isToken = getToken() ? true : false;
