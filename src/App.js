@@ -1,12 +1,15 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import Router from './Router';
-import { defaultTheme } from './styles/theme';
-import common from './styles/common.css';
+// style
 import './App.css';
-import React from 'react';
+import common from './styles/common.css';
+import { defaultTheme } from './styles/theme';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+
+// pages
+import Router from './Router';
 
 function App() {
   const theme = defaultTheme;
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
