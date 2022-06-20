@@ -2,18 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
-import { loadChat, postChat } from "../redux/modules/chatSlice";
+
+import {
+  loadChat,
+  postChat,
+  loadChannel,
+  createChannel,
+  deleteChannel,
+} from "../redux/modules/chatSlice";
+
 
 const Chat = (props) => {
   const dispatch = useDispatch();
 
   const message_ref = React.useRef(null);
+
+  const channel_ref = React.useRef(null);
   const chat_data = useSelector((state) => state.chat.data);
+  const channel_data = useSelector((state) => state.chat.data);
   console.log(chat_data);
+  console.log(channel_data);
 
   React.useEffect(() => {
-    dispatch(loadChat());
-  }, [dispatch]);
+    dispatch(loadChannel());
+  }, [dispatch, deleteChannel]);
+
+  // React.useEffect(() => {
+  //   dispatch(loadChannel());
+  // }, [dispatch]);
+
+  const createChannelList = () => {
+    dispatch(
+      createChannel({
+        channel: channel_ref.current.value,
+      })
+    );
+  };
 
   const postChatList = () => {
     dispatch(
@@ -45,15 +69,37 @@ const Chat = (props) => {
               <hr />
               <ChannelList2>
                 <p>🔽 채널</p>
-                {chat_data &&
-                  chat_data.map((list, index) => {
+                {channel_data &&
+                  channel_data.map((list, index) => {
                     return (
                       <ChannelListBox key={index}>
-                        <p>🔒 {list.message}</p>
+                        <p>🔒 {list.channel}</p>
+                        <div
+                          onClick={() => {
+                            dispatch(deleteChannel(list));
+                          }}
+                        >
+                          ⛔
+                        </div>
+
                       </ChannelListBox>
                     );
                   })}
                 ;
+                <form style={{ margin: "20px 20px" }}>
+                  <input
+                    type="text"
+                    ref={channel_ref}
+                    placeholder="채널 이름"
+                  ></input>
+                  <button
+                    onClick={() => {
+                      createChannelList();
+                    }}
+                  >
+                    채널추가
+                  </button>
+                </form>
               </ChannelList2>
             </ChannelBox>
           </div>
@@ -66,12 +112,15 @@ const Chat = (props) => {
             </BookMark>
             <ChatBox>
               <ChatList>
-                <ChatContent>
-                  <p>프로필,닉네임,메시지,시간</p>
-                </ChatContent>
-                <ChatContent1>
-                  역방향 아래서 위로 어카지 flex-direction, column-reverse 안됌
-                </ChatContent1>
+                {chat_data &&
+                  chat_data.map((list, index) => {
+                    return (
+                      <ChatContent key={index}>
+                        <p>{list.message},{list.id}</p>
+                      </ChatContent>
+                    );
+                  })}
+                ;
               </ChatList>
               <ChatPost>
                 <ChatToolUp>
@@ -162,9 +211,17 @@ const ChannelListBox = styled.div`
   width: 300px;
   height: 30px;
   background-color: #19171d;
+  display: flex;
+
   & p {
     color: white;
   }
+  & div{
+    cursor: pointer;
+    padding: 10px;
+    cursor: pointer;
+  }
+
 `;
 
 const ChannelTitle = styled.div`
@@ -218,17 +275,6 @@ const ChatContent = styled.div`
   background-color: white;
   flex-direction: column;
   margin: 5px auto;
-  & p {
-    color: black;
-    padding: 15px;
-  }
-`;
-const ChatContent1 = styled.div`
-  width: 1150px;
-  height: 50px;
-  background-color: white;
-  margin: 5px auto;
-
   & p {
     color: black;
     padding: 15px;
