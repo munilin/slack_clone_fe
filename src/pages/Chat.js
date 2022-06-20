@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
+
 import {
   loadChat,
   postChat,
@@ -10,10 +11,12 @@ import {
   deleteChannel,
 } from "../redux/modules/chatSlice";
 
+
 const Chat = (props) => {
   const dispatch = useDispatch();
 
   const message_ref = React.useRef(null);
+
   const channel_ref = React.useRef(null);
   const chat_data = useSelector((state) => state.chat.data);
   const channel_data = useSelector((state) => state.chat.data);
@@ -35,6 +38,7 @@ const Chat = (props) => {
       })
     );
   };
+
   const postChatList = () => {
     dispatch(
       postChat({
@@ -77,6 +81,7 @@ const Chat = (props) => {
                         >
                           ⛔
                         </div>
+
                       </ChannelListBox>
                     );
                   })}
@@ -216,6 +221,7 @@ const ChannelListBox = styled.div`
     padding: 10px;
     cursor: pointer;
   }
+
 `;
 
 const ChannelTitle = styled.div`

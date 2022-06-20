@@ -5,8 +5,7 @@ import { chatAPI } from "../../shared/api";
 //redux Toolkit
 const chatSlice = createSlice({
   name: "chat",
-  initialState: {
-  },
+  initialState: {},
   reducers: {
     loadChatAction: (state, action) => {
       state.data = action.payload;
@@ -31,6 +30,7 @@ export const loadChannel = () => {
   return function (dispatch) {
     instance.get("http://localhost:5001/channel").then((response) => {
       dispatch(loadChannelAction(response.data));
+
       console.log(response);
     });
   };
@@ -69,6 +69,7 @@ export const loadChat = () => {
 export const postChat = (chat) => {
   return function (dispatch) {
     instance.post("http://localhost:5001/chat", chat).then((response) => {
+
       console.log(response.data);
     });
     dispatch(postChatAction());
@@ -83,3 +84,4 @@ export const {
   deleteChannelAction,
 } = chatSlice.actions;
 export default chatSlice.reducer;
+

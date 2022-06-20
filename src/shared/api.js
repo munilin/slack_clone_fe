@@ -17,7 +17,7 @@ export const authApi = {
     }),
 };
 
-export const chatAPI = {
+  export const chatAPI = {
   loadChat: function () {
     return instance.get("http://localhost:5001/chat");
   },
@@ -33,4 +33,5 @@ export const chatAPI = {
   deleteChannel: function (channel) {
     return instance.delete("http://localhost:5001/chat");
   },
+
 };
