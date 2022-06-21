@@ -1,8 +1,11 @@
 // react
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 // router
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
+// localstorage
+import { getToken } from '../shared/token';
 
 // style
 import styled from 'styled-components';
@@ -15,11 +18,14 @@ import apple from '../assets/applelogo.png';
 import { useDispatch } from 'react-redux';
 
 // aixos
-import { loginDB } from '../redux/modules/userSlice';
+import { login } from '../redux/modules/userSlice';
 
 const Login = props => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const inputEmail = useRef('');
+  const inputPwd = useRef('');
   const [inputValue, setInputValue] = useState({
     email: '',
     pwd: '',
@@ -40,7 +46,15 @@ const Login = props => {
     }
 
     const userData = { useremail: inputValue.email, password: inputValue.pwd };
-    dispatch(loginDB(userData));
+    dispatch(login(userData));
+    const token = getToken();
+
+    if (!token) {
+      navigate('/');
+      return;
+    }
+
+    navigate('/chat');
 
     setInputValue({
       email: '',
@@ -75,9 +89,9 @@ const Login = props => {
             Apple 계정으로 로그인
           </button>
           <Line>또는</Line>
-          <input value={inputValue.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력하세요.' />
+          <input ref={inputEmail} type='text' placeholder='이메일을 입력하세요.' />
           <input value={inputValue.pwd} onChange={handleInput} name='pwd' type='password' placeholder='비밀번호를 입력해주세요.' />
-          <button>이메일로 로그인</button>
+          <button onClick={() => handleSignUp}>이메일로 로그인</button>
         </InputBox>
       </SignUpForm>
     </React.Fragment>

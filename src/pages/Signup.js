@@ -31,11 +31,19 @@ const Signup = props => {
 
   const validationCheck = (type, value) => {
     const regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    const regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    // 영어, 한글, 숫자 2~8글자
-    const regexUsername = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
+    // 비밀번호 영대소문자, 숫자, 특수문자 최소 1개 8~14글자
+    const regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/;
+    // 영어, 한글2~10글자
+    const regexUsername = /^(?=.*[a-z가-힣])[a-z가-힣]{2,10}$/;
     switch (type) {
       case 'email': {
+        if (value.indexOf('.com') === -1) {
+          setValidation({
+            ...validation,
+            email: true,
+          });
+          return;
+        }
         if (!regexEmail.test(value)) {
           setValidation({
             ...validation,
@@ -174,14 +182,21 @@ const Signup = props => {
           <Input email={validation.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력해주세요' />
           <Validation email={validation.email}>이메일 형식을 입력해주세요</Validation>
 
-          <Input pwd={validation.pwd} onChange={handleInput} name='pwd' type='password' placeholder='비밀번호를 입력해주세요.' />
+          <Input pwd={validation.pwd} onChange={handleInput} name='pwd' type='password' maxLength='14' placeholder='비밀번호를 입력해주세요.' />
           <Validation pwd={validation.pwd}>8글자 이상. 대소문자, 숫자, 특수기호가 포함되어야 합니다.</Validation>
 
-          <Input pwdcheck={validation.pwdCheck} onChange={handleInput} name='pwdCheck' type='password' placeholder='비밀번호를 재확인해주세요.' />
+          <Input
+            pwdcheck={validation.pwdCheck}
+            onChange={handleInput}
+            name='pwdCheck'
+            type='password'
+            maxLength='14'
+            placeholder='비밀번호를 재확인해주세요.'
+          />
           <Validation pwdcheck={validation.pwdCheck}>비밀번호와 일치하지 않습니다.</Validation>
 
           <Input username={validation.username} onChange={handleInput} name='username' type='text' placeholder='닉네임을 입력해주세요.' />
-          <Validation username={validation.username}>2~8자리의 글자를 입력해주세요.</Validation>
+          <Validation username={validation.username}>2~10자리의 영문 또는 한글을 입력해주세요.</Validation>
           <button>계속</button>
         </InputBox>
       </SignUpForm>

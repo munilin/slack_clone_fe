@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { setToken } from '../../shared/token';
 import { userApi } from '../../shared/api';
 
-export const loginDB = userData => {
+export const login = userData => {
   return async function () {
     try {
       const response = await userApi.login(userData);
@@ -31,7 +31,6 @@ const userSlice = createSlice({
   initialState: {
     list: [],
   },
-
   reducers: {
     loadUser: (state, action) => {
       state.list = [...action.payload];
