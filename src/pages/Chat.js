@@ -1,35 +1,52 @@
+// react
 import React from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import Header from '../components/Header';
 
-import { loadChat, postChat, loadChannel, createChannel, deleteChannel } from '../redux/modules/chatSlice';
+// style
+import styled from 'styled-components';
+
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+
+// toolkit - Slice
+import { loadChat, postChat } from '../redux/modules/chatSlice';
+import { loadChannel, createChannel, deleteChannel } from '../redux/modules/channelSlice'; 
+
+// page
+import Header from '../components/Header';
 
 const Chat = props => {
   const dispatch = useDispatch();
 
+// ref 초기값
   const message_ref = React.useRef(null);
-
   const channel_ref = React.useRef(null);
+  
+// state에 axiso get한 데이터 불러오기
   const chat_data = useSelector(state => state.chat.list);
-  const channel_data = useSelector(state => state.chat.list);
+  const channel_data = useSelector(state => state.channel.list);
 
+// 첫 렌더링
   React.useEffect(() => {
     dispatch(loadChannel());
   }, [dispatch]);
 
-  // React.useEffect(() => {
-  //   dispatch(loadChannel());
-  // }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(loadChat());
+  }, [dispatch]);
 
+// from 새로고침 없이 추가하기
   const addChannel = event => {
-    console.log(event.type);
-    if (event.type === 'submit') {
       event.preventDefault();
-    }
     createChannelList();
   };
 
+  const addChat = event => {
+      event.preventDefault();
+    postChatList();
+  };
+
+// ref 받아서 axios 추가 요청 보내는 함수(버튼)
+// 요청보내고 빈칸 만들기 '';
   const createChannelList = () => {
     dispatch(
       createChannel({
@@ -45,9 +62,9 @@ const Chat = props => {
         message: message_ref.current.value,
       })
     );
+    message_ref.current.value = '';
   };
 
-  console.log(chat_data);
   return (
     <React.Fragment>
       <Container>
@@ -83,9 +100,8 @@ const Chat = props => {
                           ⛔
                         </div>
                       </ChannelListBox>
-                    );
+                    )
                   })}
-                ;
                 <form onSubmit={addChannel} style={{ margin: '20px 20px' }}>
                   <input type='text' ref={channel_ref} placeholder='채널 이름'></input>
                   <button onClick={() => addChannel}>채널추가</button>
@@ -107,31 +123,32 @@ const Chat = props => {
                     return (
                       <ChatContent key={index}>
                         <p>
-                          {list.message},{list.id}
+                          userID : {list.id}<br/>{list.message} 
                         </p>
                       </ChatContent>
                     );
                   })}
-                ;
               </ChatList>
               <ChatPost>
                 <ChatToolUp>
                   <p>🟠🟡🟢🟤🔵🟣</p>
                 </ChatToolUp>
+                <form onSubmit={addChat} >
                 <input ref={message_ref} className='Content' type='text' placeholder='7기 공지방에 메시지 보내기'></input>
-
                 <ChatToolDown>
                   <p>
                     🟣🔵🟤🟠🟡🟢
                     <img
                       src='https://cdn-icons-png.flaticon.com/512/149/149446.png'
                       alt='Post'
+                      type="button"
                       onClick={() => {
-                        postChatList();
+                        addChat();
                       }}
                     />
                   </p>
                 </ChatToolDown>
+                </form>
               </ChatPost>
             </ChatBox>
           </div>
