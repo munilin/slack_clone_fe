@@ -9,7 +9,7 @@ import { createUser } from '../redux/modules/userSlice';
 import { useDispatch } from 'react-redux';
 
 // router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = props => {
   const dispatch = useDispatch();
@@ -163,9 +163,11 @@ const Signup = props => {
   return (
     <React.Fragment>
       <SignUpForm onSubmit={handleSignUp}>
-        <div>
-          <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
-        </div>
+        <Link to={'/'}>
+          <Logo>
+            <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
+          </Logo>
+        </Link>
         <Guide>먼저 이메일부터 입력해 보세요</Guide>
         <Reco>직장에서 사용하는 이메일 주소로 회원가입하는걸 추천드려요.</Reco>
         <InputBox>
@@ -187,6 +189,10 @@ const Signup = props => {
   );
 };
 
+const Logo = styled.div`
+  margin: 45px 0 25px 0;
+  cursor: pointer;
+`;
 const Guide = styled.span``;
 const Reco = styled.span``;
 const SignUpForm = styled.form`
@@ -196,20 +202,17 @@ const SignUpForm = styled.form`
   /* width: 1920px; */
   width: 600px;
   margin: 0 auto;
-  div {
-    margin: 45px 0 25px 0;
-  }
   ${Guide} {
     display: block;
     font-weight: 700;
     font-size: 36px;
-    margin: 10px;
+    margin-bottom: 10px;
   }
   ${Reco} {
     display: block;
     font-size: 16px;
     font-weight: 700;
-    margin: 10px;
+    margin: 10px 0 25px 0;
   }
 `;
 

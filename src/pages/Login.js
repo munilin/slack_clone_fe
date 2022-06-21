@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 // style
 import styled from 'styled-components';
 
+// image
+import google from '../assets/googlelogo.png';
+import apple from '../assets/applelogo.png';
+
 // redux
 import { useDispatch } from 'react-redux';
 
@@ -54,14 +58,22 @@ const Login = props => {
             <span>계정 생성</span>
           </Link>
         </SignUp>
-        <Logo>
-          <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
-        </Logo>
+        <Link to={'/'}>
+          <Logo>
+            <img height='48' src='https://a.slack-edge.com/bv1-9/slack_logo-ebd02d1.svg' alt='슬랙 로고' />
+          </Logo>
+        </Link>
         <Guide>이메일로 로그인 해보세요</Guide>
         <Reco>직장에서 사용하는 이메일 주소로 로그인하는걸 추천드려요.</Reco>
         <InputBox>
-          <button>Google 계정으로 로그인</button>
-          <button>Apple 계정으로 로그인</button>
+          <button>
+            <img style={{ height: '20px', margin: 'auto 5px' }} src={google} alt='구글 로고' />
+            Google 계정으로 로그인
+          </button>
+          <button>
+            <img style={{ height: '25px', boxSizing: 'border-box' }} src={apple} alt='애플 로고' />
+            Apple 계정으로 로그인
+          </button>
           <Line>또는</Line>
           <input value={inputValue.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력하세요.' />
           <input value={inputValue.pwd} onChange={handleInput} name='pwd' type='password' placeholder='비밀번호를 입력해주세요.' />
@@ -88,7 +100,9 @@ const SignUp = styled.div`
     color: #1e90ff;
   }
 `;
-const Logo = styled.div``;
+const Logo = styled.div`
+  cursor: pointer;
+`;
 const Guide = styled.span``;
 const Reco = styled.span``;
 const SignUpForm = styled.form`
@@ -134,7 +148,11 @@ const InputBox = styled.div`
     border: 1.7px solid #1e90ff;
   }
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 46px;
     padding: 10px 0;
     margin-top: 10px;
     font-size: 18px;
