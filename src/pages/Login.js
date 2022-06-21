@@ -1,11 +1,8 @@
 // react
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
 // router
 import { useNavigate, Link } from 'react-router-dom';
-
-// localstorage
-import { getToken } from '../shared/token';
 
 // style
 import styled from 'styled-components';
@@ -20,34 +17,35 @@ import { useDispatch } from 'react-redux';
 // aixos
 import { login } from '../redux/modules/userSlice';
 
+// token
+import { getToken } from '../shared/token';
+
 const Login = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const inputEmail = useRef('');
   const inputPwd = useRef('');
-  const [inputValue, setInputValue] = useState({
-    email: '',
-    pwd: '',
-  });
-
-  const handleInput = event => {
-    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
-  };
 
   const handleSignUp = event => {
     event.preventDefault();
 
-    if (inputValue.email.trim() === '') {
+    let emailValue = inputEmail.current.value;
+    let pwdValue = inputPwd.current.value;
+
+    // 공백 체크
+    if (emailValue.trim() === '') {
       return false;
     }
-    if (inputValue.pwd.trim() === '') {
+    if (pwdValue.trim() === '') {
       return false;
     }
 
-    const userData = { useremail: inputValue.email, password: inputValue.pwd };
+    const userData = { useremail: emailValue, password: pwdValue };
+
     dispatch(login(userData));
-    const token = getToken();
+
+    const token = getToken;
 
     if (!token) {
       navigate('/');
@@ -56,13 +54,10 @@ const Login = props => {
 
     navigate('/chat');
 
-    setInputValue({
-      email: '',
-      pwd: '',
-      pwdCheck: '',
-      nickname: '',
-    });
+    inputEmail.current.value = '';
+    inputPwd.current.value = '';
   };
+
   return (
     <React.Fragment>
       <SignUpForm onSubmit={handleSignUp}>
@@ -90,7 +85,7 @@ const Login = props => {
           </button>
           <Line>또는</Line>
           <input ref={inputEmail} type='text' placeholder='이메일을 입력하세요.' />
-          <input value={inputValue.pwd} onChange={handleInput} name='pwd' type='password' placeholder='비밀번호를 입력해주세요.' />
+          <input ref={inputPwd} type='password' placeholder='비밀번호를 입력해주세요.' />
           <button onClick={() => handleSignUp}>이메일로 로그인</button>
         </InputBox>
       </SignUpForm>
