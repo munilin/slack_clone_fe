@@ -6,7 +6,6 @@ export const login = userData => {
   return async function () {
     try {
       const response = await userApi.login(userData);
-      console.log(response.token);
       setToken(response.token);
       localStorage.setItem(response.username);
     } catch (error) {
