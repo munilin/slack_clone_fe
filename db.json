@@ -1,16 +1,8 @@
 {
   "channel": [
     {
-      "channel": "7기_공지방",
-      "id": 2
-    },
-    {
-      "channel": "비상연락망",
-      "id": 6
-    },
-    {
-      "channel": "7기_잡담방_수다수다",
-      "id": 7
+      "channel": "123",
+      "id": 1
     }
   ],
   "chat": [
@@ -21,6 +13,32 @@
     {
       "message": "그랬었어?",
       "id": 2
+    }
+  ],
+  "user": [
+    {
+      "useremail": "admin11@test.com",
+      "password": "admiN11@",
+      "username": "admin11",
+      "id": 1
+    },
+    {
+      "useremail": "admin12@test.com",
+      "password": "admiN12@",
+      "username": "admin12",
+      "id": 2
+    },
+    {
+      "useremail": "admin13@test.com",
+      "password": "admiN13@",
+      "username": "admin13",
+      "id": 3
+    },
+    {
+      "useremail": "admin14@test.com",
+      "password": "admiN14@",
+      "username": "admin14",
+      "id": 4
     }
   ]
 }
