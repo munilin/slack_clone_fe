@@ -1,11 +1,11 @@
 // axios
-import instance from "../../shared/axios";
+// import instance from "../../shared/axios";
 
 // toolkit - Slice
 import { createSlice } from "@reduxjs/toolkit";
 
 // API
-// import { chatAPI } from '../../shared/api';
+import { chatAPI } from "../../shared/api";
 
 // redux Toolkit
 const channelSlice = createSlice({
@@ -31,35 +31,34 @@ const channelSlice = createSlice({
 });
 
 // 채널 목록 불러오기
-export const loadChannel = () => {
-  return function (dispatch) {
-    instance.get("http://localhost:5001/channel").then((response) => {
-      dispatch(loadChannelAction(response.data));
-      console.log(response);
-    });
-  };
+export const loadChannel = () => async (dispatch) => {
+  try {
+    const res = await chatAPI.loadChannel();
+    dispatch(loadChannelAction(res.data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 채널 추가하기
-export const createChannel = (channel) => {
-  return function (dispatch) {
-    instance.post("http://localhost:5001/channel", channel).then((response) => {
-      dispatch(createChannelAction(response.data));
-      console.log(response.data);
-    });
-  };
+export const createChannel = (channel) => async (dispatch) => {
+  try {
+    const res = await chatAPI.createChannel(channel);
+    dispatch(createChannelAction(res.data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 채널 삭제하기
-export const deleteChannel = (list) => {
-  return function (dispatch) {
-    instance
-      .delete(`http://localhost:5001/channel/${list.id}`)
-      .then((response) => {
-        console.log(response.data);
-      });
+export const deleteChannel = (list) => async (dispatch) => {
+  try {
+    const res = await chatAPI.deleteChannel(list);
+    console.log(list);
     dispatch(deleteChannelAction(list.id));
-  };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 액션, 리듀서 내보내기
