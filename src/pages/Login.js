@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 // redux
 import { useDispatch } from 'react-redux';
+
+// aixos
 import { loginDB } from '../redux/modules/userSlice';
 
 const Login = props => {
@@ -33,7 +35,8 @@ const Login = props => {
       return false;
     }
 
-    dispatch(loginDB(inputValue.email, inputValue.pwd));
+    const userData = { useremail: inputValue.email, password: inputValue.pwd };
+    dispatch(loginDB(userData));
 
     setInputValue({
       email: '',

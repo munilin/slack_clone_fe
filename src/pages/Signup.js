@@ -1,10 +1,20 @@
+// react
 import React, { useState } from 'react';
+
+// style
 import styled from 'styled-components';
-import { createUserDB } from '../redux/modules/userSlice';
+
+// redux
+import { createUser } from '../redux/modules/userSlice';
 import { useDispatch } from 'react-redux';
+
+// router
+import { useNavigate } from 'react-router-dom';
 
 const Signup = props => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [validation, setValidation] = useState({
     email: false,
     pwd: false,
@@ -91,9 +101,7 @@ const Signup = props => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
   };
 
-  const handleSignUp = event => {
-    event.preventDefault();
-
+  const checkBlankValue = () => {
     // 이메일이 공백일 때
     if (inputValue.email.trim() === '') {
       setValidation({
@@ -129,19 +137,29 @@ const Signup = props => {
       });
       return;
     }
+  };
 
+  const handleSignUp = event => {
+    event.preventDefault();
+
+    // 공백 체크
+    checkBlankValue();
+
+    // 비밀번호 일치 여부 체크
     validationCheck('pwdCheck', inputValue.pwdCheck);
 
     const isSubmit = Object.values(validation).indexOf(true);
 
+    const userData = { useremail: inputValue.email, password: inputValue.pwd, username: inputValue.username };
     if (isSubmit === -1) {
-      console.log(2);
-      dispatch(createUserDB({ useremail: inputValue.email, password: inputValue.pwd, username: inputValue.username }));
+      dispatch(createUser(userData));
+      navigate('/');
     } else {
       alert('회원정보를 확인해주세요.');
       return false;
     }
   };
+
   return (
     <React.Fragment>
       <SignUpForm onSubmit={handleSignUp}>

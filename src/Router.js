@@ -1,5 +1,5 @@
 // page
-import { Chat, Login, Home, Signup, NotFound } from './pages/index';
+import { Chat, Login, Signup, NotFound } from './pages/index';
 
 // token
 import { getToken } from './shared/token';
@@ -17,9 +17,8 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
         <Route path='/chat' element={<Chat />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

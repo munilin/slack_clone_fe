@@ -1,28 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import instance from '../../shared/axios';
 import { setToken } from '../../shared/token';
-import { authApi } from '../../shared/api';
+import { userApi } from '../../shared/api';
 
-export const loginDB = ({ useremail, password }) => {
-  return async function (navigate) {
+export const loginDB = userData => {
+  return async function () {
     try {
-      const response = await authApi.login(useremail, password);
+      const response = await userApi.login(userData);
       console.log(response.token);
       setToken(response.token);
       localStorage.setItem(response.username);
-      navigate('/');
     } catch (error) {
       alert(error);
     }
   };
 };
 
-export const createUserDB = ({ useremail, password, username }) => {
-  return async function (navigate) {
+export const createUser = userData => {
+  return async function () {
     try {
-      const response = await authApi.signup(useremail, password, username);
-      alert(response);
-      navigate('/login');
+      await userApi.signup(userData);
+      alert('success');
     } catch (error) {
       alert(error);
     }
@@ -39,14 +36,11 @@ const userSlice = createSlice({
     loadUser: (state, action) => {
       state.list = [...action.payload];
     },
-    createUser: (state, action) => {
-      state.list.push(...state, action.payload);
-    },
     updateUser: (state, action) => {
       // 내용 채우기
     },
   },
 });
 
-export const { loadUser, createUser, updateUser } = userSlice.actions;
+export const { loadUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
