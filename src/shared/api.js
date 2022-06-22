@@ -14,18 +14,18 @@ export const userApi = {
 
 export const chatAPI = {
   loadChat: function () {
-    return instance.get("/chat",);
+    return instance.get("/api/chat",);
   },
   postChat: function (chat) {
-    return instance.post("/chat", chat);
+    return instance.post("/api/chat", chat);
   },
   loadChannel: function () {
-    return instance.get("/channels");
+    return instance.get("/api/channels");
   },
   createChannel: function (channel) {
-    return instance.post("/channel", channel);
+    return instance.post("/api/channel", channel);
   },
   deleteChannel: function (list) {
-    return instance.delete(`/${list.id}`);
+    return instance.delete(`/api/channel/${list.id}`);
   },
 };
