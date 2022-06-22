@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // token
-import { clearToken, getToken } from '../shared/token';
+import { getStorage, clearStorage } from '../shared/localStorage';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -15,14 +15,14 @@ const Header = () => {
   console.log(isLogin);
 
   useEffect(() => {
-    const check = getToken();
+    const check = getStorage('token');
     if (check) {
       setIsLogin(true);
     }
   }, []);
 
   const logout = () => {
-    clearToken();
+    clearStorage();
     navigate('/');
   };
 
