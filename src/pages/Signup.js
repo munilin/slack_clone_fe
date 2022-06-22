@@ -1,6 +1,9 @@
 // react
 import React, { useState } from 'react';
 
+// axios
+import axios from 'axios';
+
 // style
 import styled from 'styled-components';
 
@@ -29,6 +32,7 @@ const Signup = props => {
     username: '',
   });
 
+  // 유효성 검사
   const validationCheck = (type, value) => {
     const regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // 비밀번호 영대소문자, 숫자, 특수문자 최소 1개 8~14글자
@@ -104,19 +108,20 @@ const Signup = props => {
     }
   };
 
+  // 입력 받을 때 마다 validation 체크
   const handleInput = event => {
     validationCheck(event.target.name, event.target.value);
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
   };
 
+  // 입력 값의 공백 방지
   const checkBlankValue = () => {
-    // 이메일이 공백일 때
     if (inputValue.email.trim() === '') {
       setValidation({
         ...validation,
         email: true,
       });
-      return;
+      return false;
     }
 
     // 비밀번호가 공백일 때
@@ -125,7 +130,7 @@ const Signup = props => {
         ...validation,
         pwd: true,
       });
-      return;
+      return false;
     }
 
     // 비밀번호 체크가 공백일 때
@@ -134,7 +139,7 @@ const Signup = props => {
         ...validation,
         pwdCheck: true,
       });
-      return;
+      return false;
     }
 
     // 닉네임이 공백일 때
@@ -143,28 +148,46 @@ const Signup = props => {
         ...validation,
         username: true,
       });
-      return;
+      return false;
+    }
+
+    return true;
+  };
+
+  // 회원가입 <-> 백통신
+  const signup = async userData => {
+    try {
+      const repsonse = await axios.post('http://13.125.217.60:8080/user/signup', {
+        useremail: userData.useremail,
+        password: userData.password,
+        username: userData.username,
+      });
+      console.log(repsonse);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+      setInputValue({ email: '', pwd: '', pwdCheck: '', username: '' });
     }
   };
 
+  // 회원가입 버튼 클릭
   const handleSignUp = event => {
+    console.log('회원가입 버튼 클릭');
     event.preventDefault();
 
     // 공백 체크
-    checkBlankValue();
+    if (!checkBlankValue()) {
+      return;
+    }
 
     // 비밀번호 일치 여부 체크
     validationCheck('pwdCheck', inputValue.pwdCheck);
 
     const isSubmit = Object.values(validation).indexOf(true);
-
     const userData = { useremail: inputValue.email, password: inputValue.pwd, username: inputValue.username };
+
     if (isSubmit === -1) {
-      dispatch(createUser(userData));
-      navigate('/');
-    } else {
-      alert('회원정보를 확인해주세요.');
-      return false;
+      signup(userData);
     }
   };
 
@@ -179,14 +202,23 @@ const Signup = props => {
         <Guide>먼저 이메일부터 입력해 보세요</Guide>
         <Reco>직장에서 사용하는 이메일 주소로 회원가입하는걸 추천드려요.</Reco>
         <InputBox>
-          <Input email={validation.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력해주세요' />
+          <Input email={validation.email} value={inputValue.email} onChange={handleInput} name='email' type='text' placeholder='이메일을 입력해주세요' />
           <Validation email={validation.email}>이메일 형식을 입력해주세요</Validation>
 
-          <Input pwd={validation.pwd} onChange={handleInput} name='pwd' type='password' maxLength='14' placeholder='비밀번호를 입력해주세요.' />
-          <Validation pwd={validation.pwd}>8글자 이상. 대소문자, 숫자, 특수기호가 포함되어야 합니다.</Validation>
+          <Input
+            pwd={validation.pwd}
+            value={inputValue.pwd}
+            onChange={handleInput}
+            name='pwd'
+            type='password'
+            maxLength='14'
+            placeholder='비밀번호를 입력해주세요.'
+          />
+          <Validation pwd={validation.pwd}>8글자 이상. 대소문자, 숫자, 특수문자가 포함되어야 합니다.</Validation>
 
           <Input
             pwdcheck={validation.pwdCheck}
+            value={inputValue.pwdCheck}
             onChange={handleInput}
             name='pwdCheck'
             type='password'
@@ -195,7 +227,14 @@ const Signup = props => {
           />
           <Validation pwdcheck={validation.pwdCheck}>비밀번호와 일치하지 않습니다.</Validation>
 
-          <Input username={validation.username} onChange={handleInput} name='username' type='text' placeholder='닉네임을 입력해주세요.' />
+          <Input
+            username={validation.username}
+            value={inputValue.username}
+            onChange={handleInput}
+            name='username'
+            type='text'
+            placeholder='닉네임을 입력해주세요.'
+          />
           <Validation username={validation.username}>2~10자리의 영문 또는 한글을 입력해주세요.</Validation>
           <button>계속</button>
         </InputBox>
