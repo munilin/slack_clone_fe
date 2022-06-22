@@ -9,6 +9,8 @@ const instance = axios.create({
 //토큰값
 const token = getToken();
 
-instance.defaults.headers.common['Authorization'] = `${token}`;
+if (token) {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 export default instance;

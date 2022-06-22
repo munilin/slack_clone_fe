@@ -7,9 +7,10 @@ import axios from 'axios';
 export const login = userData => {
   return async function (dispatch) {
     try {
-      // const response = instance.post('/user/login', userData);
-      const response = await axios.post('http://13.125.4.231/user/login', { useremail: userData.useremail, password: userData.password });
+      const response = await instance.post('/user/login', { useremail: userData.useremail, password: userData.password });
+      // const response = await axios.post('http://13.125.4.231/user/login', { useremail: userData.useremail, password: userData.password });
       console.log('로그인 성공');
+      console.log(response.data);
       console.log('토큰값', response.data.accessToken);
       setToken(response.data.accessToken);
       localStorage.setItem('nickname', response.data.nickname);
