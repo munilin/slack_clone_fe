@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 
 // router
 import { useNavigate, Link } from 'react-router-dom';
+import { userApi } from '../shared/api';
 
 const Signup = props => {
   const dispatch = useDispatch();
@@ -157,12 +158,8 @@ const Signup = props => {
   // 회원가입 <-> 백통신
   const signup = async userData => {
     try {
-      const repsonse = await axios.post('http://13.125.4.231/user/signup', {
-        // const repsonse = await axios.post('http://13.125.217.60:8080/user/signup', {
-        useremail: userData.useremail,
-        password: userData.password,
-        nickname: userData.nickname,
-      });
+      // const repsonse = await axios.post('http://13.125.4.231/user/signup', {
+      const repsonse = await userApi.signup(userData);
       console.log(repsonse);
       navigate('/');
     } catch (error) {

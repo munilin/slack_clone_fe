@@ -1,31 +1,35 @@
-import instance from "./axios";
+import instance from './axios';
 
 export const userApi = {
   // 로그인
-  login: function (data) {
-    instance.post("http://localhost:5001/login", data);
+  login: function (userData) {
+    instance.post('user/login', { useremail: userData.useremail, password: userData.password });
   },
 
   // 회원 가입
-  signup: function (data) {
-    instance.post("http://localhost:5001/user", data);
+  signup: function (userData) {
+    instance.post('user/signup', {
+      useremail: userData.useremail,
+      password: userData.password,
+      nickname: userData.nickname,
+    });
   },
 };
 
 export const chatAPI = {
   loadChat: function () {
-    return instance.get("http://localhost:5001/chat");
+    return instance.get('/chat');
   },
   postChat: function (chat) {
-    return instance.post("http://localhost:5001/chat", chat);
+    return instance.post('/chat', chat);
   },
   loadChannel: function () {
-    return instance.get("http://localhost:5001/chat");
+    return instance.get('/chat');
   },
   createChannel: function (channel) {
-    return instance.post("http://localhost:5001/chat", channel);
+    return instance.post('chat', channel);
   },
   deleteChannel: function (list) {
-    return instance.delete(`http://localhost:5001/channel/${list.id}`);
+    return instance.delete(`/channel/${list.id}`);
   },
 };
