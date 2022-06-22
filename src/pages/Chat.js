@@ -25,7 +25,6 @@ const Chat = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // ref 초기값
   const message_ref = React.useRef(null);
   const channel_ref = React.useRef(null);
 
@@ -64,11 +63,10 @@ const Chat = (props) => {
     channel_ref.current.value = "";
   };
 
-  const postChatList = (index) => {
+  const postChatList = () => {
     dispatch(
       postChat({
         message: message_ref.current.value,
-        id: [index]
       })
     );
     message_ref.current.value = "";
@@ -293,6 +291,7 @@ const ChatList = styled.div`
   height: 480px;
   border: 1px white solid;
   background-color: gray;
+  overflow: scroll;
   & p {
     color: white;
     padding: 15px;
