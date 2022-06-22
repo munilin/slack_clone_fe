@@ -1,24 +1,49 @@
-import React from "react";
-import styled from "styled-components";
+// react
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// style
+import styled from 'styled-components';
+
+// token
+import { getStorage, clearStorage } from '../shared/localStorage';
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
+
+  console.log(isLogin);
+
+  useEffect(() => {
+    const check = getStorage('token');
+    if (check) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  const logout = () => {
+    clearStorage();
+    navigate('/');
+  };
+
   return (
     <TopBar>
       <ul>💬</ul>
-      <p>✖</p>
-      <div className="search">
-        <input type="text" placeholder="검색어 입력" />
-        <img
-          src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-          alt="Search"
-        />
+      {isLogin && (
+        <div className='logout' onClick={logout}>
+          <p>logout ✖</p>
+        </div>
+      )}
+      <div className='search'>
+        <input type='text' placeholder='검색어 입력' />
+        <img src='https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png' alt='Search' />
       </div>
     </TopBar>
   );
 };
 
 const TopBar = styled.div`
-  width: 1535px;
+  /* width: 1535px; */
   height: 40px;
   border: 2px solid;
   background-color: #121016;
@@ -54,6 +79,10 @@ const TopBar = styled.div`
     float: left;
     color: white;
     margin: 11px;
+    cursor: pointer;
+  }
+  .logout {
+    color: white;
     cursor: pointer;
   }
 `;
