@@ -1,21 +1,23 @@
+// redux
 import { createSlice } from '@reduxjs/toolkit';
-import { getToken, setToken } from '../../shared/token';
-import { userApi } from '../../shared/api';
+
+// localstorage
+import { getStorage, setStorage } from '../../shared/localStorage';
+
+// axios
 import instance from '../../shared/axios';
-import axios from 'axios';
 
 export const login = userData => {
   return async function (dispatch) {
     try {
       const response = await instance.post('/user/login', { useremail: userData.useremail, password: userData.password });
-      // const response = await axios.post('http://13.125.4.231/user/login', { useremail: userData.useremail, password: userData.password });
       console.log('로그인 성공');
       console.log(response.data);
       console.log('토큰값', response.data.accessToken);
-      setToken(response.data.accessToken);
-      localStorage.setItem('nickname', response.data.nickname);
-      localStorage.setItem('useremail', response.data.useremail);
-      dispatch(checkLogin(!!getToken));
+      setStorage('token', response.data.accessToken);
+      setStorage('useremail', response.data.useremail);
+      setStorage('nickname', response.data.nickname);
+      dispatch(checkLogin(!!getStorage('token')));
     } catch (error) {
       console.log('로그인 실패');
       alert(error);

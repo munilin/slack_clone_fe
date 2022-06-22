@@ -7,16 +7,11 @@ import axios from 'axios';
 // style
 import styled from 'styled-components';
 
-// redux
-import { createUser } from '../redux/modules/userSlice';
-import { useDispatch } from 'react-redux';
-
 // router
 import { useNavigate, Link } from 'react-router-dom';
 import instance from '../shared/axios';
 
 const Signup = props => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [validation, setValidation] = useState({
@@ -35,11 +30,15 @@ const Signup = props => {
 
   // 유효성 검사
   const validationCheck = (type, value) => {
+    // 이메일 유효성 검사
     const regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
     // 비밀번호 영대소문자, 숫자, 특수문자 최소 1개 8~14글자
     const regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/;
+
     // 영어, 한글2~10글자
     const regexNickname = /^(?=.*[a-z가-힣])[a-z가-힣]{2,10}$/;
+
     switch (type) {
       case 'email': {
         if (value.indexOf('.com') === -1) {
