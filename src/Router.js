@@ -1,5 +1,8 @@
 // page
-import { Chat, Login, Signup, NotFound, Chatting } from './pages/index';
+import { Chat, Login, Signup, NotFound } from './pages/index';
+
+// token
+import { getToken } from './shared/token';
 
 // router
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -11,9 +14,9 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login />} />
         <Route path='/chat' element={<Chat />} />
-        <Route path='/chatting/:id' element={<Chatting />} />
+        <Route path='/chat/:id' element={<Chat />} />
+        <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

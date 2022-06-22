@@ -3,14 +3,6 @@
     {
       "channel": "123",
       "id": 1
-    },
-    {
-      "channel": "rrr",
-      "id": 2
-    },
-    {
-      "channel": "rrrr",
-      "id": 3
     }
   ],
   "chat": [
@@ -21,14 +13,6 @@
     {
       "message": "그랬었어?",
       "id": 2
-    },
-    {
-      "message": "g",
-      "id": 3
-    },
-    {
-      "message": "fg",
-      "id": 4
     }
   ],
   "user": [
