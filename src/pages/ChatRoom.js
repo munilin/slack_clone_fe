@@ -31,7 +31,7 @@ import NoRoom from "./NoRoom";
 const ChatRoom = (props) => {
   const dispatch = useDispatch();
 
-  // 소켓 통신 객체
+  // 소켓 통신 객체 // 백엔드서버
   const sock = new SockJS("http://52.79.54.15/chatting");
   const ws = Stomp.over(sock);
 
