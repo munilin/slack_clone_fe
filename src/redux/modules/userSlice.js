@@ -8,11 +8,11 @@ export const login = userData => {
   return async function (dispatch) {
     try {
       // const response = instance.post('/user/login', userData);
-      const response = await axios.post('http://13.125.217.60:8080/user/login', { useremail: userData.useremail, password: userData.password });
+      const response = await axios.post('http://13.125.4.231/user/login', { useremail: userData.useremail, password: userData.password });
       console.log('로그인 성공');
       console.log('토큰값', response.data.accessToken);
       setToken(response.data.accessToken);
-      localStorage.setItem('username', response.data.username);
+      localStorage.setItem('nickname', response.data.nickname);
       localStorage.setItem('useremail', response.data.useremail);
       dispatch(checkLogin(!!getToken));
     } catch (error) {
