@@ -13,17 +13,17 @@ export const userApi = {
 };
 
 export const chatAPI = {
-  loadChat: function () {
-    return instance.get("http://localhost:5001/chat");
+  loadChat: function (list) {
+    return instance.get(`http://localhost:5001/chat/${list.id}`, list);
   },
   postChat: function (chat) {
-    return instance.post("http://localhost:5001/chat", chat);
+    return instance.post(`http://localhost:5001/chat/${chat.id}`, chat);
   },
   loadChannel: function () {
-    return instance.get("http://localhost:5001/chat");
+    return instance.get("http://localhost:5001/channel");
   },
   createChannel: function (channel) {
-    return instance.post("http://localhost:5001/chat", channel);
+    return instance.post("http://localhost:5001/channel", channel);
   },
   deleteChannel: function (list) {
     return instance.delete(`http://localhost:5001/channel/${list.id}`);
