@@ -1,5 +1,5 @@
 // react
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // router
 import { useNavigate, Link } from 'react-router-dom';
@@ -12,17 +12,21 @@ import google from '../assets/googlelogo.png';
 import apple from '../assets/applelogo.png';
 
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // aixos
 import { login } from '../redux/modules/userSlice';
 
-// token
-import { getToken } from '../shared/token';
-
 const Login = props => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.user.isLogin);
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/chat');
+    }
+  }, [isLogin]);
 
   const inputEmail = useRef('');
   const inputPwd = useRef('');
@@ -42,17 +46,7 @@ const Login = props => {
     }
 
     const userData = { useremail: emailValue, password: pwdValue };
-
     dispatch(login(userData));
-
-    const token = getToken;
-
-    if (!token) {
-      navigate('/');
-      return;
-    }
-
-    navigate('/chat');
 
     inputEmail.current.value = '';
     inputPwd.current.value = '';

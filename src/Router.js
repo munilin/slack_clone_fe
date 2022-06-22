@@ -11,9 +11,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 
 const Router = () => {
-  const isToken = getToken() ? true : false;
-  console.log('isToken?', isToken);
-
   return (
     <BrowserRouter>
       <Routes>
