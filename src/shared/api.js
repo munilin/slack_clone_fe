@@ -13,19 +13,24 @@ export const userApi = {
 };
 
 export const chatAPI = {
-  loadChat: function () {
-    return instance.get("/api/chat",);
+  loadChat: function (chat) {
+    // return instance.get(`/api/channel/${chat.id}/messages`,);
+    return instance.get("http://localhost:5001/chat");
   },
-  postChat: function (chat) {
-    return instance.post("/api/chat", chat);
+  postChat: function (chat) { //chatroom /pub
+    // return instance.post(`/api/channel/${chat.id}/messages`, chat);
+    return instance.post("http://localhost:5001/chat", chat);
   },
   loadChannel: function () {
-    return instance.get("/api/channels");
+    // return instance.get("/api/channels");
+    return instance.get("http://localhost:5001/channel");
   },
   createChannel: function (channel) {
-    return instance.post("/api/channel", channel);
+    // return instance.post("/api/channel", channel);
+    return instance.post("http://localhost:5001/channel", channel);
   },
   deleteChannel: function (list) {
-    return instance.delete(`/api/channel/${list.id}`);
+    // return instance.delete(`/api/channel/${list.id}`);
+    return instance.delete(`http://localhost:5001/channel/${list.id}`);
   },
 };
