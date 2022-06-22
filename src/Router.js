@@ -1,8 +1,8 @@
 // page
 import { Chat, Login, Signup, NotFound } from './pages/index';
-
+// import Auth from './shared/auth';
 // token
-import { getToken } from './shared/token';
+import { getStorage } from './shared/localStorage';
 
 // router
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

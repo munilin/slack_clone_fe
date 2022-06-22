@@ -22,14 +22,14 @@ const Signup = props => {
     email: false,
     pwd: false,
     pwdCheck: false,
-    username: false,
+    nickname: false,
   });
 
   const [inputValue, setInputValue] = useState({
     email: '',
     pwd: '',
     pwdCheck: '',
-    username: '',
+    nickname: '',
   });
 
   // 유효성 검사
@@ -38,7 +38,7 @@ const Signup = props => {
     // 비밀번호 영대소문자, 숫자, 특수문자 최소 1개 8~14글자
     const regexPwd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/;
     // 영어, 한글2~10글자
-    const regexUsername = /^(?=.*[a-z가-힣])[a-z가-힣]{2,10}$/;
+    const regexNickname = /^(?=.*[a-z가-힣])[a-z가-힣]{2,10}$/;
     switch (type) {
       case 'email': {
         if (value.indexOf('.com') === -1) {
@@ -89,16 +89,16 @@ const Signup = props => {
         }
         break;
       }
-      case 'username': {
-        if (!regexUsername.test(value)) {
+      case 'nickname': {
+        if (!regexNickname.test(value)) {
           setValidation({
             ...validation,
-            username: true,
+            nickname: true,
           });
         } else {
           setValidation({
             ...validation,
-            username: false,
+            nickname: false,
           });
         }
         break;
@@ -143,10 +143,10 @@ const Signup = props => {
     }
 
     // 닉네임이 공백일 때
-    if (inputValue.username.trim() === '') {
+    if (inputValue.nickname.trim() === '') {
       setValidation({
         ...validation,
-        username: true,
+        nickname: true,
       });
       return false;
     }
@@ -157,16 +157,17 @@ const Signup = props => {
   // 회원가입 <-> 백통신
   const signup = async userData => {
     try {
-      const repsonse = await axios.post('http://13.125.217.60:8080/user/signup', {
+      const repsonse = await axios.post('http://13.125.4.231/user/signup', {
+        // const repsonse = await axios.post('http://13.125.217.60:8080/user/signup', {
         useremail: userData.useremail,
         password: userData.password,
-        username: userData.username,
+        nickname: userData.nickname,
       });
       console.log(repsonse);
       navigate('/');
     } catch (error) {
       console.log(error);
-      setInputValue({ email: '', pwd: '', pwdCheck: '', username: '' });
+      setInputValue({ email: '', pwd: '', pwdCheck: '', nickname: '' });
     }
   };
 
@@ -184,7 +185,7 @@ const Signup = props => {
     validationCheck('pwdCheck', inputValue.pwdCheck);
 
     const isSubmit = Object.values(validation).indexOf(true);
-    const userData = { useremail: inputValue.email, password: inputValue.pwd, username: inputValue.username };
+    const userData = { useremail: inputValue.email, password: inputValue.pwd, nickname: inputValue.nickname };
 
     if (isSubmit === -1) {
       signup(userData);
@@ -228,14 +229,14 @@ const Signup = props => {
           <Validation pwdcheck={validation.pwdCheck}>비밀번호와 일치하지 않습니다.</Validation>
 
           <Input
-            username={validation.username}
-            value={inputValue.username}
+            nickname={validation.nickname}
+            value={inputValue.nickname}
             onChange={handleInput}
-            name='username'
+            name='nickname'
             type='text'
             placeholder='닉네임을 입력해주세요.'
           />
-          <Validation username={validation.username}>2~10자리의 영문 또는 한글을 입력해주세요.</Validation>
+          <Validation nickname={validation.nickname}>2~10자리의 영문 또는 한글을 입력해주세요.</Validation>
           <button>계속</button>
         </InputBox>
       </SignUpForm>
@@ -287,7 +288,7 @@ const Validation = styled.span`
     display: ${props => (props.pwdcheck ? 'static' : 'none')};
   }
   &:last-of-type {
-    display: ${props => (props.username ? 'static' : 'none')};
+    display: ${props => (props.nickname ? 'static' : 'none')};
   }
 `;
 

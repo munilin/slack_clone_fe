@@ -21,7 +21,6 @@ const Login = props => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.user.isLogin);
-
   useEffect(() => {
     if (isLogin) {
       navigate('/chat');
