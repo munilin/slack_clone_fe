@@ -4,11 +4,14 @@ import React from "react";
 // style
 import styled from "styled-components";
 
+// pages
+import NoRoom from "./NoRoom";
+
 // redux
 import { useDispatch, useSelector } from "react-redux";
 
 // router
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // toolkit - Slice
 import { loadChat, postChat } from "../redux/modules/chatSlice";
@@ -24,6 +27,8 @@ import Header from "../components/Header";
 const Chat = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const roomId = useParams();
+
 
   const message_ref = React.useRef(null);
   const channel_ref = React.useRef(null);
@@ -100,7 +105,7 @@ const Chat = (props) => {
                       <ChannelListBox
                         key={index}
                         onClick={() => {
-                          navigate("/chat/" + `${list.id}`);
+                          navigate("/Chatting/" + `${list.id}`);
                         }}
                       >
                         <p>🔒 {list.channel}</p>
@@ -134,6 +139,7 @@ const Chat = (props) => {
             </BookMark>
             <ChatBox>
               <ChatList>
+                <NoRoom/>
                 {chat_data &&
                   chat_data.map((list, index) => {
                     return (
@@ -279,7 +285,7 @@ const ChatBox = styled.div`
   width: 1165px;
   height: 600px;
   border: 1px white solid;
-  background-color: gray;
+  background-color: white;
   & p {
     color: white;
     padding: 15px;
@@ -290,7 +296,7 @@ const ChatList = styled.div`
   width: 1164px;
   height: 480px;
   border: 1px white solid;
-  background-color: gray;
+  background-color: white;
   overflow: scroll;
   & p {
     color: white;
