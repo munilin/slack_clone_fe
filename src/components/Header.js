@@ -12,17 +12,20 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
-  console.log(isLogin);
-
   useEffect(() => {
     const check = getStorage('token');
+
     if (check) {
       setIsLogin(true);
     }
   }, []);
 
   const logout = () => {
-    clearStorage();
+    console.log('로그아웃');
+    clearStorage('token');
+    clearStorage('useremail');
+    clearStorage('nickname');
+    window.location.replace('/');
     navigate('/');
   };
 
