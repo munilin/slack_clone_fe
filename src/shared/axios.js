@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getStorage } from './localStorage';
 
 const instance = axios.create({
-  baseURL: 'http://13.125.4.231',
+  // baseURL: 'http://13.125.4.231',
   headers: { 'Content-Type': 'application/json' },
 });
 
