@@ -5,7 +5,7 @@ import React from "react";
 import styled from "styled-components";
 
 // pages
-import NoRoom from "./NoRoom";
+import { Chatting, NoRoom } from "./index";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -27,14 +27,13 @@ import Header from "../components/Header";
 const Chat = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const roomId = useParams();
-
+  const { id } = useParams();
 
   const message_ref = React.useRef(null);
   const channel_ref = React.useRef(null);
 
   // state에 axiso get한 데이터 불러오기
-  const chat_data = useSelector((state) => state.chat.list);
+  // const chat_data = useSelector((state) => state.chat.list);
   const channel_data = useSelector((state) => state.channel.list);
 
   // 첫 렌더링
@@ -71,6 +70,7 @@ const Chat = (props) => {
   const postChatList = () => {
     dispatch(
       postChat({
+        roomId: id,
         message: message_ref.current.value,
       })
     );
@@ -105,7 +105,7 @@ const Chat = (props) => {
                       <ChannelListBox
                         key={index}
                         onClick={() => {
-                          navigate("/Chatting/" + `${list.id}`);
+                          navigate(`/Chat/${list.id}`);
                         }}
                       >
                         <p>🔒 {list.channel}</p>
@@ -139,19 +139,8 @@ const Chat = (props) => {
             </BookMark>
             <ChatBox>
               <ChatList>
-                <NoRoom/>
-                {chat_data &&
-                  chat_data.map((list, index) => {
-                    return (
-                      <ChatContent key={index}>
-                        <p>
-                          userID : {list.id}
-                          <br />
-                          {list.message}
-                        </p>
-                      </ChatContent>
-                    );
-                  })}
+                {!id && <NoRoom />}
+                {id && <Chatting />}
               </ChatList>
               <ChatPost>
                 <ChatToolUp>
@@ -285,9 +274,10 @@ const ChatBox = styled.div`
   width: 1165px;
   height: 600px;
   border: 1px white solid;
-  background-color: white;
+  background-color: lightgray;
+  margin: 5px
   & p {
-    color: white;
+    color: black;
     padding: 15px;
   }
 `;
@@ -298,18 +288,6 @@ const ChatList = styled.div`
   border: 1px white solid;
   background-color: white;
   overflow: scroll;
-  & p {
-    color: white;
-    padding: 15px;
-  }
-`;
-
-const ChatContent = styled.div`
-  width: 1150px;
-  height: 50px;
-  background-color: white;
-  flex-direction: column;
-  margin: 5px auto;
   & p {
     color: black;
     padding: 15px;
@@ -359,7 +337,6 @@ const ChatToolDown = styled.div`
     color: black;
     padding: 7px;
   }
-
   img {
     float: right;
     width: 25px;

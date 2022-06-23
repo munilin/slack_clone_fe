@@ -28,6 +28,7 @@ export const loadChat = () => async (dispatch) => {
   try {
     const res = await chatAPI.loadChat();
     dispatch(loadChatAction(res.data));
+    console.log(res.data);
   } catch (error) {
     console.log(error);
   }
@@ -38,6 +39,7 @@ export const postChat = (chat) => async (dispatch) => {
   try {
     const res = await chatAPI.postChat(chat);
     dispatch(postChatAction(res.data));
+    console.log(res.data);
   } catch (error) {
     console.log(error);
   }
