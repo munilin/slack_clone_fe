@@ -1,9 +1,6 @@
 // react
 import React, { useState } from 'react';
 
-// axios
-import axios from 'axios';
-
 // style
 import styled from 'styled-components';
 

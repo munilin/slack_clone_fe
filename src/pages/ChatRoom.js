@@ -1,60 +1,42 @@
-import React from "react";
-
-import styled from "styled-components";
-
-// Components = 우린 chat.js에 있고
-import MessageList from "./MessageList";
-import MessageWrite from "./MessageWrite";
-import ChatList from "./ChatList";
-
-// elements = 이건 카테고리라 필요 없고
-import { ChatName } from "../elements";
-
 // 채팅 관련 함수들 가져오기 = chat.js에 다 불려있고
-import { chatActions } from "../redux/modules/chat";
-
-// 쿠키 =  shared/token 부르고
-import { getCookie } from "../shared/cookie";
+import { chatActions } from '../redux/modules/chat';
 
 // 리덕스 = history가 browser_router느낌
-import { useDispatch, useSelector } from "react-redux";
-// import { history } from '../redux/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
 
 // 소켓 통신
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 
 // components  = Notfound
-import NoRoom from "./NoRoom";
+import NoRoom from './NoRoom';
+import { getStorage } from '../shared/localStorage';
+
+import { loadChatAction, postChatAction } from '../redux/modules/chatSlice';
 
 // 채팅 방 컴포넌트
-const ChatRoom = (props) => {
+const ChatRoom = props => {
   const dispatch = useDispatch();
 
   // 소켓 통신 객체 // 백엔드서버
-  const sock = new SockJS("http://52.79.54.15/chatting");
+  const sock = new SockJS('http://13.125.4.231/chatting');
   const ws = Stomp.over(sock);
 
-  // 방 제목 가져오기
-  // const channel = useSelector((state) => state.channel.channel);
-  // const channelId = useSelector((state) => state.channel.id);
-  const { roomName, category } = useSelector((state) => state.chat.currentChat);
-  const roomId = useSelector((state) => state.chat.currentChat.roomId);
+  // 채널id 가져오기
+  const channel = useSelector(state => state.channel.channel);
+  const channelId = useSelector(state => state.channel.id);
 
   // 토큰
-  // const token = localStorage.getItem('token');
-  const token = getCookie("access-token");
+  const token = getStorage('token');
 
   // 보낼 메시지 텍스트
-  // const message = useSelector((state) => state.chat.message);
-  const messageText = useSelector((state) => state.chat.messageText);
+  const message = useSelector(state => state.chat.message);
+  console.log(`message: ${message}`);
 
   // sedner 정보 가져오기
-  // let sender = useSelector((state) => state.user.username);
-  let sender = useSelector((state) => state.user.userInfo?.username);
-  if (!sender) {
-    sender = getCookie("username");
-  }
+  sender = getStorage('username');
+  console.log(`token: ${token}`);
+  console.log(`sender: ${sender}`);
 
   // 렌더링 될 때마다 연결,구독 다른 방으로 옮길 때 연결, 구독 해제
   React.useEffect(() => {
@@ -62,7 +44,7 @@ const ChatRoom = (props) => {
     return () => {
       wsDisConnectUnsubscribe();
     };
-  }, [roomId]); //channelId
+  }, [channelId]); //channelId
 
   // 웹소켓 연결, 구독
   function wsConnectSubscribe() {
@@ -73,11 +55,10 @@ const ChatRoom = (props) => {
         },
         () => {
           ws.subscribe(
-            `/sub/api/chat/rooms/${roomId}`, // `/sub/api/channel/${channelId}`
-            (data) => {
+            `/sub/api/chat/rooms/${channelId}`,
+            data => {
               const newMessage = JSON.parse(data.body);
-              dispatch(chatActions.getMessages(newMessage));
-              // dispatch(chatSliceActions.loadChatAction(newMessage));
+              dispatch(loadChatAction(newMessage));
             },
             { token: token }
           );
@@ -93,7 +74,7 @@ const ChatRoom = (props) => {
     try {
       ws.disconnect(
         () => {
-          ws.unsubscribe("sub-0");
+          ws.unsubscribe('sub-0');
         },
         { token: token }
       );
@@ -123,32 +104,26 @@ const ChatRoom = (props) => {
     try {
       // token이 없으면 로그인 페이지로 이동
       if (!token) {
-        alert("토큰이 없습니다. 다시 로그인 해주세요.");
-        history.replace("/");
-        //navigate.replace("/");
+        alert('토큰이 없습니다. 다시 로그인 해주세요.');
+        window.location.replace('/');
       }
       // send할 데이터
       const data = {
-        type: "TALK",
-        roomId: roomId,  //channelId
-        sender: sender,   
-        message: messageText, //message
+        type: 'TALK',
+        roomId: channelId,
+        sender: sender,
+        message: message,
       };
       // 빈문자열이면 리턴
-      if (messageText === "") {
+      if (message === '') {
         return;
       }
       // 로딩 중
       dispatch(chatActions.isLoading());
       waitForConnection(ws, function () {
-        ws.send(
-          "/pub/api/chat/message",  // "pub/api/channel/message"
-          { token: token },
-          JSON.stringify(data)
-        );
+        ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
         console.log(ws.ws.readyState);
-        dispatch(chatActions.writeMessage(""));
-        // dispatch(chatSliceActions.postChat(""));
+        dispatch(postChatAction(''));
       });
     } catch (error) {
       console.log(error);
@@ -157,7 +132,7 @@ const ChatRoom = (props) => {
   }
 
   // 나가기 상태 보여주기 = 우린 없는데
-  const outRoomStat = useSelector((state) => state.chat.chatOut);
+  const outRoomStat = useSelector(state => state.chat.chatOut);
 
   if (outRoomStat === true) {
     return (
@@ -184,22 +159,22 @@ const ChatRoom = (props) => {
 };
 
 const Container = styled.div`
-  ${(props) => props.theme.border_box};
-  ${(props) => props.theme.flex_row}
+  ${props => props.theme.border_box};
+  ${props => props.theme.flex_row}
   width: 100%;
   height: 100%;
   background-color: white;
-  color: ${(props) => props.theme.theme_yellow};
-  @media ${(props) => props.theme.mobile} {
+  color: ${props => props.theme.theme_yellow};
+  @media ${props => props.theme.mobile} {
     flex-direction: column;
   }
 `;
 
 const ChatWrap = styled.div`
-  ${(props) => props.theme.flex_column}
+  ${props => props.theme.flex_column}
   width: 70%;
   height: 100%;
-  @media ${(props) => props.theme.mobile} {
+  @media ${props => props.theme.mobile} {
     width: 100%;
     height: 85%;
   }

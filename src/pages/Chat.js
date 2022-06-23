@@ -1,30 +1,26 @@
 // react
-import React from "react";
+import React from 'react';
 
 // style
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // pages
-import { Chatting, NoRoom } from "./index";
+import { Chatting, NoRoom } from './index';
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 // router
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 // toolkit - Slice
-import { loadChat, postChat } from "../redux/modules/chatSlice";
-import {
-  loadChannel,
-  createChannel,
-  deleteChannel,
-} from "../redux/modules/channelSlice";
+import { loadChat, postChat } from '../redux/modules/chatSlice';
+import { loadChannel, createChannel, deleteChannel } from '../redux/modules/channelSlice';
 
 // page
-import Header from "../components/Header";
+import Header from '../components/Header';
 
-const Chat = (props) => {
+const Chat = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -34,7 +30,7 @@ const Chat = (props) => {
 
   // state에 axiso get한 데이터 불러오기
   // const chat_data = useSelector((state) => state.chat.list);
-  const channel_data = useSelector((state) => state.channel.list);
+  const channel_data = useSelector(state => state.channel.list);
 
   // 첫 렌더링
   React.useEffect(() => {
@@ -42,18 +38,15 @@ const Chat = (props) => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(loadChat());
+    if (id) {
+      dispatch(loadChat(id));
+    }
   }, [dispatch]);
 
   // from 새로고침 없이 추가하기
-  const addChannel = (event) => {
+  const addChannel = event => {
     event.preventDefault();
     createChannelList();
-  };
-
-  const addChat = (event) => {
-    event.preventDefault();
-    postChatList();
   };
 
   // ref 받아서 axios 추가 요청 보내는 함수(버튼)
@@ -64,7 +57,7 @@ const Chat = (props) => {
         channel: channel_ref.current.value,
       })
     );
-    channel_ref.current.value = "";
+    channel_ref.current.value = '';
   };
 
   const postChatList = () => {
@@ -74,16 +67,16 @@ const Chat = (props) => {
         message: message_ref.current.value,
       })
     );
-    message_ref.current.value = "";
+    message_ref.current.value = '';
   };
 
   return (
     <React.Fragment>
       <Container>
         <Header></Header>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: 'flex' }}>
           <LeftBar>
-            <div id="circle"></div>
+            <div id='circle'></div>
           </LeftBar>
           <div>
             <WorkSpace>
@@ -119,12 +112,8 @@ const Chat = (props) => {
                       </ChannelListBox>
                     );
                   })}
-                <form onSubmit={addChannel} style={{ margin: "20px 20px" }}>
-                  <input
-                    type="text"
-                    ref={channel_ref}
-                    placeholder="채널 이름"
-                  ></input>
+                <form onSubmit={addChannel} style={{ margin: '20px 20px' }}>
+                  <input type='text' ref={channel_ref} placeholder='채널 이름'></input>
                   <button onClick={() => addChannel}>채널추가</button>
                 </form>
               </ChannelList2>
@@ -142,32 +131,6 @@ const Chat = (props) => {
                 {!id && <NoRoom />}
                 {id && <Chatting />}
               </ChatList>
-              <ChatPost>
-                <ChatToolUp>
-                  <p>🟠🟡🟢🟤🔵🟣</p>
-                </ChatToolUp>
-                <form onSubmit={addChat}>
-                  <input
-                    ref={message_ref}
-                    className="Content"
-                    type="text"
-                    placeholder="7기 공지방에 메시지 보내기"
-                  ></input>
-                  <ChatToolDown>
-                    <p>
-                      🟣🔵🟤🟠🟡🟢
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/149/149446.png"
-                        alt="Post"
-                        type="button"
-                        onClick={() => {
-                          addChat();
-                        }}
-                      />
-                    </p>
-                  </ChatToolDown>
-                </form>
-              </ChatPost>
             </ChatBox>
           </div>
         </div>
@@ -182,16 +145,15 @@ const Container = styled.div`
 const LeftBar = styled.div`
   width: 70px;
   height: 680px;
-  background-color: #19171D; 
+  background-color: #19171d;
   border: 1px white solid;
-}
-#circle {
-  width : 50px;
-  height : 50px;
-  border-radius: 50%;
-  background-color: tomato;
-  margin: 10px auto;
-}
+  #circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: tomato;
+    margin: 10px auto;
+  }
 `;
 const WorkSpace = styled.div`
   width: 300px;
@@ -275,8 +237,7 @@ const ChatBox = styled.div`
   height: 600px;
   border: 1px white solid;
   background-color: lightgray;
-  margin: 5px
-  & p {
+  margin: 5px & p {
     color: black;
     padding: 15px;
   }
@@ -294,53 +255,4 @@ const ChatList = styled.div`
   }
 `;
 
-const ChatPost = styled.div`
-  width: 1150px;
-  height: 110px;
-  background-color: white;
-  margin: 5px auto;
-  border: 1px solid;
-  border-radius: 10px;
-
-  & input {
-    margin-left: 5px;
-    width: 1140px;
-    height: 40px;
-    border: none;
-  }
-  img {
-    width: 15px;
-    cursor: pointer;
-    margin: -4px 4px;
-  }
-`;
-
-const ChatToolUp = styled.div`
-  width: 1148px;
-  height: 30px;
-  background-color: lightgray;
-  border-radius: 10px 10px 0px 0px;
-  margin: auto;
-  & p {
-    color: black;
-    padding: 7px;
-  }
-`;
-
-const ChatToolDown = styled.div`
-  width: 1148px;
-  height: 30px;
-  background-color: lightgray;
-  margin: 8px auto;
-  border-radius: 0px 0px 10px 10px;
-  & p {
-    color: black;
-    padding: 7px;
-  }
-  img {
-    float: right;
-    width: 25px;
-    cursor: pointer;
-  }
-`;
 export default Chat;
