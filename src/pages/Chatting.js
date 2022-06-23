@@ -12,13 +12,13 @@ import SockJS from 'sockjs-client';
 // components  = Notfound
 import NoRoom from './NoRoom';
 import { getStorage } from '../shared/localStorage';
-import { loadChatAction, postChatAction } from '../redux/modules/chatSlice';
+import { loadChat, postChat } from '../redux/modules/chatSlice';
 
 const Chatting = props => {
   const channel_data = useSelector(state => state.channel.list);
   const chat_data = useSelector(state => state.chat.list);
 
-  console.log(channel_data);
+  console.log(`chat_data: ${chat_data}`);
 
   // 웹 소켓 통신
   const dispatch = useDispatch();
@@ -60,10 +60,10 @@ const Chatting = props => {
         },
         () => {
           ws.subscribe(
-            `/sub/api/chat/rooms/${channelId}`,
+            `/sub/api/chat/rooms/${parseInt(props.id)}`,
             data => {
               const newMessage = JSON.parse(data.body);
-              dispatch(loadChatAction(newMessage));
+              dispatch(loadChat(newMessage));
             },
             { token: token }
           );
@@ -127,7 +127,9 @@ const Chatting = props => {
       waitForConnection(ws, function () {
         ws.send('/pub/api/chat/message', { token: token }, JSON.stringify(data));
         console.log(ws.ws.readyState);
-        dispatch(postChatAction(''));
+        console.log(`보낼 아이디: ${id}`);
+        console.log(`보낼 메시지: ${message_ref}`);
+        dispatch(postChat(id, message_ref));
       });
     } catch (error) {
       console.log(error);

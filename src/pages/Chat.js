@@ -129,7 +129,7 @@ const Chat = props => {
             <ChatBox>
               <ChatList>
                 {!id && <NoRoom />}
-                {id && <Chatting />}
+                {id && <Chatting id={id} />}
               </ChatList>
             </ChatBox>
           </div>

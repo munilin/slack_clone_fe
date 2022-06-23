@@ -35,11 +35,12 @@ export const loadChat = id => async dispatch => {
 };
 
 // 채팅 작성하기
-export const postChat = chat => async dispatch => {
+export const postChat = (id, message) => async dispatch => {
   try {
-    const res = await chatAPI.postChat(chat);
-    dispatch(postChatAction(res.data));
+    const res = await chatAPI.postChat(id, message);
+    console.log('response');
     console.log(res.data);
+    dispatch(postChatAction(res.data));
   } catch (error) {
     console.log(error);
   }
