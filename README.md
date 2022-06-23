@@ -2,10 +2,10 @@
 슬랙의 틀을 클론하며 최소 기능과 실시간 채팅(Web Soket)을 구현합니다.
 22.6.23 = 프로젝트를 마무리하며 로그인,회원가입,채널,채팅을 구현하고 웹소켓을 적용하지 못했습니다.
 
-![image](https://user-images.githubusercontent.com/103887348/175287224-25091fe4-4313-4f3f-83ea-71b3de8d129d.png)
-![image](https://user-images.githubusercontent.com/103887348/175287613-1d78fb1a-3905-4833-9270-31a3be963ba6.png)
 ![image](https://user-images.githubusercontent.com/103887348/175287698-1bb7a4ee-dd3e-49fc-bb8a-d445c8b8f314.png)
 ![image](https://user-images.githubusercontent.com/103887348/175287677-e75e5648-6fec-48ff-b0ec-3736e6883f69.png)
+![image](https://user-images.githubusercontent.com/103887348/175287224-25091fe4-4313-4f3f-83ea-71b3de8d129d.png)
+![image](https://user-images.githubusercontent.com/103887348/175287613-1d78fb1a-3905-4833-9270-31a3be963ba6.png)
 
 
 ### ✔ 팀원
