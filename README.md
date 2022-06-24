@@ -3,8 +3,8 @@
 
 ![image](https://user-images.githubusercontent.com/103887348/175287698-1bb7a4ee-dd3e-49fc-bb8a-d445c8b8f314.png)
 ![image](https://user-images.githubusercontent.com/103887348/175287677-e75e5648-6fec-48ff-b0ec-3736e6883f69.png)
-![image](https://user-images.githubusercontent.com/103887348/175287224-25091fe4-4313-4f3f-83ea-71b3de8d129d.png)
 ![image](https://user-images.githubusercontent.com/103887348/175287613-1d78fb1a-3905-4833-9270-31a3be963ba6.png)
+![image](https://user-images.githubusercontent.com/103887348/175287224-25091fe4-4313-4f3f-83ea-71b3de8d129d.png)
 
 
 ### ✔ 팀원
@@ -34,8 +34,6 @@ Front : 이동복, 문희린
 
 ### ‼ Truoble Shooting ‼
 로컬스토리지 사용하여 자동 로그인 하는 이유 - 로그아웃시 쿠키를 삭제하기 때문에<br/>
-map 함수 오류, array를 사용하지 않았던 점 :
-
 
 ### ✔ 와이어 프레임
 ![image](https://user-images.githubusercontent.com/103887348/174427639-2164f6eb-4570-40c6-9ce0-a12acdd95e7e.png)
