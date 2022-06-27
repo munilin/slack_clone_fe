@@ -15,7 +15,8 @@ const Chatting = (props) => {
 
   return (
     <React.Fragment>
-      <p>Chatting</p>
+      <p>인기천, 이동복님이 입장하셨습니다.</p>
+      <p>서다빈, 나호준, 문희린님이 입장하셨습니다.</p>
       <ChatList>
         {chat_data &&
           chat_data.map((list, index) => {
