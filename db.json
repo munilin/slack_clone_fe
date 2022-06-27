@@ -1,16 +1,16 @@
 {
   "channel": [
     {
-      "channel": "스파르타코딩_19기",
-      "id": 4
+      "channel": "123",
+      "id": 1
     },
     {
-      "channel": "면담방",
-      "id": 5
+      "channel": "rrr",
+      "id": 2
     },
     {
-      "channel": "다시 단톡방",
-      "id": 6
+      "channel": "rrrr",
+      "id": 3
     }
   ],
   "chat": [
@@ -29,41 +29,6 @@
     {
       "message": "fg",
       "id": 4
-    },
-    {
-      "roomId": "1",
-      "message": "잘나갔다고?",
-      "id": 5
-    },
-    {
-      "roomId": "3",
-      "message": "작성하빈다?",
-      "id": 6
-    },
-    {
-      "roomId": "3",
-      "message": "ㅇ",
-      "id": 7
-    },
-    {
-      "roomId": "3",
-      "message": "ㅇ",
-      "id": 8
-    },
-    {
-      "roomId": "3",
-      "message": "ㅇ",
-      "id": 9
-    },
-    {
-      "roomId": "3",
-      "message": "ㅇ",
-      "id": 10
-    },
-    {
-      "roomId": "3",
-      "message": "ㅇ",
-      "id": 11
     }
   ],
   "user": [
